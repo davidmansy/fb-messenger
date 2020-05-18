@@ -1,19 +1,18 @@
 import React from "react";
 import LeanJSLogo from "./Layout/LeanJSLogo";
+import Link from "../App/Layout/Link";
 
 const Footer = () => (
   <div className="footer">
     <ul>
       <li>
-        <a target="_blank" href="https://reactjs.academy">
-          ReactJS Academy
-        </a>
+        <Link to="https://reactjs.academy">ReactJS Academy</Link>
       </li>
       <li>by</li>
       <li>
-        <a target="_blank" href="https://leanjs.com">
+        <Link to="https://leanjs.com">
           <LeanJSLogo width={25} />
-        </a>
+        </Link>
       </li>
     </ul>
   </div>
