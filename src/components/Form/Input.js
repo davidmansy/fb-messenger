@@ -12,3 +12,17 @@ Hints:
   <Input value={someValue} onChange={handleChange} /> and the style becomes an implementation detail of Input
 
 */
+
+class Input extends React.Component {
+  state = {
+    value: ''
+  }
+
+  render() {
+    const {value, className, handleChange, ...otherProps} = this.props;
+    const inputValue = this.state.value || value;
+    return <input value={inputValue} onChange={handleChange} className={`form-control ${className}`} {...otherProps} />
+  }
+}
+
+export default Input;
