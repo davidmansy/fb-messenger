@@ -10,16 +10,21 @@ Each of the following functions  return an action. These functions are called
 action creators
 */
 
-export const receiveThread = thread => ({
-  type: "?",
-  thread
+export const receiveThread = (thread) => ({
+  type: RECEIVE_THREAD,
+  thread,
 });
 
 export const toggleMessageDetail = () => ({
-  type: TOGGLE_MESSAGE_DETAIL
+  type: TOGGLE_MESSAGE_DETAIL,
 });
 
-export const receiveMessage = message => ({
+export const receiveMessage = (message) => ({
   type: RECEIVE_MESSAGE,
-  message
+  message,
+});
+
+export const receiveMessages = (messages) => ({
+  type: RECEIVE_MESSAGES,
+  messages,
 });

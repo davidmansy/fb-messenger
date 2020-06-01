@@ -6,13 +6,20 @@ import { receiveMessages } from "../../../actions";
 import * as api from "../../../api/message";
 import Chat from "./Chat";
 
-const ChatContainer = props => {
+function selectMessages(state) {
+  return state.messages;
+}
+
+const ChatContainer = (props) => {
   const { match } = props;
   const { username } = match.params;
-  const [messages, setMessages] = useState([]);
+  const messages = useSelector(selectMessages);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    api.fetchMessages(username).then(setMessages);
+    api
+      .fetchMessages(username)
+      .then((messages) => dispatch(receiveMessages(messages)));
   }, [username]);
 
   return <Chat messages={messages} match={match} />;
