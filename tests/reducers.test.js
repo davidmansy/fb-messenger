@@ -39,8 +39,9 @@ describe("src/reducers/index.js", () => {
     const received = indexReducer(undefined, { type: "@@redux/INIT" });
 
     expect(received).toEqual({
+      messages: [],
       thread: null,
-      ui: { isMessageDetailOpen: true }
+      ui: { isMessageDetailOpen: false },
     });
   });
 });

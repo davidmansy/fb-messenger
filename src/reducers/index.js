@@ -19,6 +19,9 @@ export function threadReducer(state = null, action) {
   switch (action.type) {
     case RECEIVE_THREAD:
       return action.thread;
+    case RECEIVE_MESSAGE:
+      const { message, time } = action.message;
+      return { ...state, lastMessage: { message, time } };
     default:
       return state;
   }

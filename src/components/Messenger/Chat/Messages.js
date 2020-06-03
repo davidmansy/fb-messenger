@@ -43,7 +43,7 @@ const MessageWrapper = styled.div`
   padding: 0.5em;
   display: flex;
 
-  ${props =>
+  ${(props) =>
     props.from === "sent" &&
     css`
       justify-content: flex-end;
@@ -61,9 +61,9 @@ const Message = styled.div`
   padding: 0.5em 1em;
   display: inline-block;
   font-size: 0.9rem;
-  background: ${props =>
+  background: ${(props) =>
     props.from === "received" ? colours.lightGrey : colours.lightBlue};
-  color: ${props =>
+  color: ${(props) =>
     props.from === "received" ? colours.black : colours.white};
 `;
 
@@ -74,7 +74,7 @@ const Messages = ({ username, messages = [] }) => {
   const sendMessage = () => {
     const message = api.sendMessage({
       message: newMessage,
-      to: username
+      to: username,
     });
 
     dispatch(receiveMessage(message));
@@ -103,7 +103,7 @@ const Messages = ({ username, messages = [] }) => {
       </MessagesList>
       <NewMessage>
         <MessageBox
-          onChange={e => setNewMessage(e.target.value)}
+          onChange={(e) => setNewMessage(e.target.value)}
           type="text"
           value={newMessage}
           placeholder="Type your message..."
