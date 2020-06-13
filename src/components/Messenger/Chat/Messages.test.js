@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import waitForExpect from "wait-for-expect";
 import "@testing-library/jest-dom/extend-expect";
 import { act } from "react-dom/test-utils";
-import { render, fireEvent, wait } from "@testing-library/react";
+import { render, fireEvent, wait, findByText } from "@testing-library/react";
 
 import { configureStore } from "../../../store";
 import ComposedMessages, { Messages, InputMessage, Message } from "./Messages";
@@ -19,6 +19,8 @@ const Root = ({ children }) => {
 describe("<Messages />", () => {
   it(`should send a message (unit test)`, async () => {
     // 1. shallow the <Messages /> component
+    const wrapper = shallow(<Messages />);
+    console.log(wrapper.debug());
     // You can use console.log(wrapper.debug()) to console.log the component that you are testing
     // 2  Mock the api. Hint, the api functions are passed as a default prop (api = apiImplementation),
     // you can override that prop by doing <Messages api={my_mocked_api_object} />
@@ -65,9 +67,22 @@ describe("<Messages />", () => {
   it(`should send a message (integration test with React Testing Library)`, async () => {
     // 1. Replace the following h1 with the component/s you are testing
     // Hint: It's very (very very) similar to what you did in the previous integration test
-    const { queryAllByTestId, getByText, getByPlaceholderText } = render(
-      <h1>Replace this h1 with the component/s you are testing</h1>
+    const fakeApi = {
+      sendMessage: jest.fn((message) => Promise.resolve({ id: 1, ...message })),
+    };
+    const { findByText, getByText, getByPlaceholderText } = render(
+      <Root>
+        <ComposedMessages api={fakeApi} />
+      </Root>
     );
+    const randomMessage = Math.random().toString();
+    const input = getByPlaceholderText(/Type your message/i);
+    fireEvent.change(input, { target: { value: randomMessage } });
+    fireEvent.click(getByText(/Send/i));
+    await wait(() => {
+      // expect(getByText(randomMessage)).toBeTruthy();
+      findByText(randomMessage)
+    });
 
     // 2. It expects to have zero messages in the chat
     // Hint: You might need to add something to the Message component to facilitate this
